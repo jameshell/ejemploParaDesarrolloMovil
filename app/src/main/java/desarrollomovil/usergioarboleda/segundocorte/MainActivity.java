@@ -2,6 +2,7 @@ package desarrollomovil.usergioarboleda.segundocorte;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
@@ -35,15 +36,27 @@ public class MainActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
 
-                Vibrator vibra = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                vibra.vibrate(500);
+                final Vibrator vibra = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
+                cronometro.setBase(SystemClock.elapsedRealtime());
                 cronometro.start();
 
-                long elapsedMillis = SystemClock.elapsedRealtime() - cronometro.getBase();
-                if(elapsedMillis == 1000){
-                    vibra.vibrate(500);
-                }
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Do something after 100ms
+                        vibra.vibrate(500);
+                    }
+                }, 10000); //Aproximadamente 10 segundos.
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Do something after 100ms
+                        vibra.vibrate(500);
+                    }
+                }, 15000);
 
             }
         });
